@@ -1,0 +1,71 @@
+class Node:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        self.left = None
+        self.right = None
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, name, age):
+        if self.root is None:
+            self.root = Node(name, age)
+        else:
+            self._insert_recursive(self.root, name, age)
+
+    def _insert_recursive(self, current, name, age):
+        if name < current.name:
+            if current.left is None:
+                current.left = Node(name, age)
+            else:
+                self._insert_recursive(current.left, name, age)
+        elif name > current.name:
+            if current.right is None:
+                current.right = Node(name, age)
+            else:
+                self._insert_recursive(current.right, name, age)
+
+    def print_sorted_name(self):
+        self._print_sorted_name(self.root)
+
+    def _print_sorted_name(self, current):
+        if current:
+            self._print_sorted_name(current.left)
+            print(f"{current.name} - {current.age} tahun")
+            self._print_sorted_name(current.right)
+
+    def print_sorted_age(self):
+        self._print_sorted_age(self.root)
+
+    def _print_sorted_age(self, current):
+        if current:
+            self._print_sorted_age(current.left)
+            print(f"{current.name} - {current.age} tahun")
+            self._print_sorted_age(current.right)
+
+
+# Contoh penggunaan:
+tree = BinaryTree()
+
+while True:
+    print("Pilih Menu:")
+    print("1. Tambah Penduduk")
+    print("2. Tampilkan Urut Nama")
+    print("3. Tampilkan Urut Usia")
+    choice = int(input("Pilihan Anda: "))
+
+    if choice == 1:
+        name = input("Masukkan Nama: ")
+        age = int(input("Masukkan Usia: "))
+        tree.insert(name, age)
+        print("Data berhasil ditambahkan!")
+    elif choice == 2:
+        print("Daftar Penduduk Urut Nama:")
+        tree.print_sorted_name()
+    elif choice == 3:
+        print("Daftar Penduduk Urut Usia:")
+        tree.print_sorted_age()
+    else:
+        print("Pilihan tidak valid. Silakan pilih menu yang benar.")
